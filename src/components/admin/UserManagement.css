@@ -1,0 +1,205 @@
+/* src/admin/UserManagement.css */
+.user-management {
+    padding: var(--spacing-xl);
+  }
+  
+  .management-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .management-header h2 {
+    font-family: var(--font-heading);
+    color: var(--text-primary);
+  }
+  
+  .management-controls {
+    display: flex;
+    gap: var(--spacing-md);
+  }
+  
+  .search-input,
+  .role-filter {
+    padding: var(--spacing-md);
+    border: 1px solid var(--text-secondary);
+    border-radius: var(--border-radius-sm);
+  }
+  
+  .search-input {
+    width: 300px;
+  }
+  
+  .users-table-container {
+    overflow-x: auto;
+  }
+  
+  .users-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .users-table th,
+  .users-table td {
+    padding: var(--spacing-md);
+    text-align: left;
+    border-bottom: 1px solid var(--background-light);
+  }
+  
+  .users-table th {
+    background-color: var(--background-dark);
+    color: white;
+    font-weight: 500;
+  }
+  
+  .role-select,
+  .status-select {
+    padding: var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--text-secondary);
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: var(--spacing-sm);
+  }
+  
+  .view-button,
+  .delete-button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    font-weight: 500;
+  }
+  
+  .view-button {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .delete-button {
+    background-color: var(--error-color);
+    color: white;
+  }
+  
+  .user-details-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal-content {
+    background: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+    max-width: 800px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+  
+  .modal-content h3 {
+    margin-bottom: var(--spacing-xl);
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+  }
+  
+  .details-sections {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+  }
+  
+  .favorites-section,
+  .reviews-section {
+    background: var(--background-light);
+    padding: var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+  }
+  
+  .anime-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+  }
+  
+  .anime-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .anime-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: var(--border-radius-sm);
+    margin-bottom: var(--spacing-sm);
+  }
+  
+  .reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+  }
+  
+  .review-item {
+    background: white;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+  }
+  
+  .review-item h5 {
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+  }
+  
+  .review-item p {
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-secondary);
+  }
+  
+  .review-item span {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  
+  .close-button {
+    margin-top: var(--spacing-xl);
+    padding: var(--spacing-md) var(--spacing-xl);
+    background-color: var(--background-dark);
+    color: white;
+    border-radius: var(--border-radius-sm);
+    width: 100%;
+  }
+  
+  @media (max-width: 768px) {
+    .management-header {
+      flex-direction: column;
+      align-items: stretch;
+      gap: var(--spacing-md);
+    }
+  
+    .management-controls {
+      flex-direction: column;
+    }
+  
+    .search-input {
+      width: 100%;
+    }
+  
+    .action-buttons {
+      flex-direction: column;
+    }
+  }

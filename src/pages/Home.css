@@ -1,0 +1,34 @@
+/* src/pages/Home.css */
+.home {
+    padding-top: 60px; /* Account for fixed navbar */
+  }
+  
+  .anime-section {
+    margin: var(--spacing-xl) 0;
+  }
+  
+  .section-title {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-lg);
+    padding-bottom: var(--spacing-sm);
+    border-bottom: 2px solid var(--primary-color);
+  }
+  
+  .anime-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+  }
+  
+  @media (max-width: 768px) {
+    .anime-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: var(--spacing-md);
+    }
+  
+    .section-title {
+      font-size: 1.25rem;
+    }
+  }

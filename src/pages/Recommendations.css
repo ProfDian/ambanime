@@ -1,0 +1,76 @@
+/* src/pages/Recommendations.css */
+.recommendations-page {
+    padding-top: 60px;
+    min-height: 100vh;
+    background-color: var(--background-light);
+  }
+  
+  .recommendations-banner {
+    background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+    padding: var(--spacing-xl) 0;
+    color: white;
+    text-align: center;
+  }
+  
+  .recommendations-banner-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-xl);
+  }
+  
+  .recommendations-banner h1 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .recommendations-banner p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+  
+  .recommendations-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+  }
+  
+  .recommendations-section {
+    margin-bottom: var(--spacing-xl);
+    background-color: white;
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-lg);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .recommendations-section h2 {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-primary);
+  }
+  
+  .section-description {
+    color: var(--text-secondary);
+    margin-bottom: var(--spacing-lg);
+  }
+  
+  .anime-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+  }
+  
+  @media (max-width: 768px) {
+    .recommendations-banner h1 {
+      font-size: 2rem;
+    }
+  
+    .recommendations-section h2 {
+      font-size: 1.5rem;
+    }
+  
+    .anime-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+  }

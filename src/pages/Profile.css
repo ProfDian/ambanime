@@ -1,0 +1,330 @@
+/* src/pages/Profile.css */
+.profile-container {
+  min-height: 100vh;
+  background-color: #121212;
+  color: #ffffff;
+}
+
+/* Profile Header Section */
+.profile-header {
+  position: relative;
+  background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+              url('https://wallpaperaccess.com/full/395434.jpg');
+  background-size: cover;
+  background-position: center;
+  padding: 100px 40px;
+  color: white;
+  text-align: center;
+}
+
+.profile-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4), rgba(18,18,18,1));
+}
+
+.profile-info {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.profile-info h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.bio {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+  opacity: 0.9;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+.favorite-genres {
+  display: inline-block;
+  padding: 8px 16px;
+  background: rgba(255, 107, 107, 0.2);
+  border-radius: 20px;
+  font-size: 0.9rem;
+  margin-top: 15px;
+}
+
+/* Edit Profile Form */
+.profile-edit-form {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: #FF6B6B;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
+}
+
+/* Buttons */
+.profile-edit-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.save-button,
+.cancel-button,
+.edit-profile-button {
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.save-button {
+  background: #FF6B6B;
+  color: white;
+  flex: 2;
+}
+
+.cancel-button {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  flex: 1;
+}
+
+.edit-profile-button {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 10px 20px;
+  margin-top: 20px;
+}
+
+/* Content Section */
+.profile-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* Tabs */
+.profile-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.tab-button {
+  padding: 12px 24px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.tab-button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: #FF6B6B;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.tab-button.active {
+  color: white;
+}
+
+.tab-button.active::after {
+  width: 80%;
+}
+
+/* Anime Grid */
+.anime-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 25px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.anime-card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.anime-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.anime-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.anime-card:hover img {
+  transform: scale(1.05);
+}
+
+.anime-card-content {
+  padding: 15px;
+}
+
+.anime-card-content h3 {
+  color: white;
+  font-size: 1rem;
+  margin-bottom: 15px;
+  line-height: 1.4;
+}
+
+.remove-button {
+  width: 100%;
+  padding: 8px;
+  background: rgba(255, 59, 59, 0.2);
+  color: #ff3b3b;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.remove-button:hover {
+  background: rgba(255, 59, 59, 0.3);
+}
+
+/* Reviews Section */
+.reviews-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.review-card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.review-anime-info {
+  position: relative;
+  width: 100%;
+  height: 150px;
+}
+
+.review-anime-info img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.review-anime-info h3 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 15px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.9));
+  color: white;
+  margin: 0;
+}
+
+.review-content {
+  padding: 20px;
+  flex-grow: 1;
+}
+
+.review-content p {
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.review-date {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.875rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .profile-header {
+      padding: 60px 20px;
+  }
+
+  .profile-info h1 {
+      font-size: 2rem;
+  }
+
+  .profile-tabs {
+      flex-wrap: wrap;
+  }
+
+  .reviews-list {
+      grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,55 @@
+/* src/pages/Search.css */
+.search-page {
+    padding-top: 60px;
+    min-height: 100vh;
+    background-color: var(--background-light);
+  }
+  
+  .search-header {
+    background: linear-gradient(135deg, var(--background-dark) 0%, var(--primary-color) 100%);
+    padding: var(--spacing-xl);
+    color: white;
+    text-align: center;
+  }
+  
+  .search-header h1 {
+    font-family: var(--font-heading);
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .search-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+  }
+  
+  .load-more-button {
+    display: block;
+    width: 200px;
+    margin: var(--spacing-xl) auto;
+    padding: var(--spacing-md) var(--spacing-xl);
+    background-color: var(--primary-color);
+    color: white;
+    border-radius: var(--border-radius-md);
+    text-align: center;
+  }
+  
+  .no-results,
+  .no-more-results {
+    text-align: center;
+    padding: var(--spacing-xl);
+    color: var(--text-secondary);
+  }
+  
+  .loading-more {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+  }
+  
+  @media (max-width: 768px) {
+    .loading-more {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+  }

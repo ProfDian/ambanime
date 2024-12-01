@@ -1,0 +1,80 @@
+/* src/styles/variables.css */
+:root {
+    /* Color Palette - Anime-inspired */
+    --primary-color: #FF6B6B;      /* Vibrant red for main actions */
+    --secondary-color: #4ECDC4;    /* Turquoise for accents */
+    --accent-color: #FFE66D;       /* Yellow for highlights */
+    --background-dark: #2C3E50;    /* Dark blue for backgrounds */
+    --background-light: #ECF0F1;   /* Light gray for content areas */
+    --text-primary: #2C3E50;       /* Dark blue for main text */
+    --text-secondary: #7F8C8D;     /* Gray for secondary text */
+    --error-color: #E74C3C;        /* Red for errors */
+    --success-color: #2ECC71;      /* Green for success messages */
+    
+    /* Typography */
+    --font-main: 'Roboto', sans-serif;
+    --font-heading: 'Poppins', sans-serif;
+    
+    /* Spacing */
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    
+    /* Border Radius */
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 16px;
+    
+    /* Transitions */
+    --transition-speed: 0.3s;
+  }
+  
+  /* src/styles/global.css */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: var(--font-main);
+    background-color: var(--background-light);
+    color: var(--text-primary);
+    line-height: 1.6;
+  }
+  
+  button {
+    cursor: pointer;
+    border: none;
+    background: none;
+    font-family: var(--font-main);
+    transition: all var(--transition-speed) ease;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-md);
+  }
+  
+  .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: var(--primary-color);
+  }
+  
+  .error {
+    color: var(--error-color);
+    padding: var(--spacing-md);
+    text-align: center;
+  }
+  
+  .success {
+    color: var(--success-color);
+    padding: var(--spacing-md);
+    text-align: center;
+  }

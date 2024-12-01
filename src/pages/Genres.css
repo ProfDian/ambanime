@@ -1,0 +1,140 @@
+/* src/pages/Genre.css */
+.genre-page {
+    padding-top: 60px;
+    min-height: 100vh;
+    background-color: var(--background-light);
+  }
+  
+  .genre-banner {
+    background: linear-gradient(135deg, var(--background-dark) 0%, var(--primary-color) 100%);
+    padding: var(--spacing-xl) 0;
+    color: white;
+    text-align: center;
+  }
+  
+  .genre-banner-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-xl);
+  }
+  
+  .genre-banner h1 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .genre-banner p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+  }
+  
+  .genre-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-xl);
+    display: flex;
+    gap: var(--spacing-xl);
+  }
+  
+  .genre-sidebar {
+    width: 250px;
+    flex-shrink: 0;
+  }
+  
+  .genre-sidebar h2 {
+    margin-bottom: var(--spacing-lg);
+    color: var(--text-primary);
+    font-family: var(--font-heading);
+  }
+  
+  .genre-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xs);
+  }
+  
+  .genre-button {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    background-color: white;
+    color: var(--text-primary);
+    transition: all var(--transition-speed) ease;
+    text-align: left;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .genre-button:hover {
+    background-color: var(--background-dark);
+    color: white;
+  }
+  
+  .genre-button.active {
+    background-color: var(--primary-color);
+    color: white;
+  }
+  
+  .genre-count {
+    background-color: rgba(0, 0, 0, 0.1);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.8rem;
+  }
+  
+  .genre-main {
+    flex-grow: 1;
+  }
+  
+  .genre-header {
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .genre-header h2 {
+    font-family: var(--font-heading);
+    font-size: 1.8rem;
+    margin-bottom: var(--spacing-md);
+    color: var(--text-primary);
+  }
+  
+  .genre-description {
+    color: var(--text-secondary);
+    line-height: 1.6;
+  }
+  
+  .anime-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
+  }
+  
+  @media (max-width: 968px) {
+    .genre-content {
+      flex-direction: column;
+    }
+  
+    .genre-sidebar {
+      width: 100%;
+    }
+  
+    .genre-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .genre-banner h1 {
+      font-size: 2rem;
+    }
+  
+    .genre-header h2 {
+      font-size: 1.5rem;
+    }
+  
+    .anime-grid {
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+  }

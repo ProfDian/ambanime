@@ -1,0 +1,195 @@
+/* src/components/anime/AnimeCard.css */
+.anime-card {
+  background: #1a1a1a;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.anime-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.anime-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.anime-card-image {
+  position: relative;
+  width: 100%;
+  padding-top: 140%; /* Aspect ratio 5:7 for anime posters */
+}
+
+.anime-card-image img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Status Badge */
+.anime-card-status {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: 2;
+  background: rgba(71, 84, 255, 0.9);
+  color: white;
+  backdrop-filter: blur(4px);
+}
+
+/* Score Badge */
+.anime-card-score {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 107, 107, 0.9);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  z-index: 2;
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.anime-card-content {
+  padding: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #1a1a1a;
+}
+
+.anime-card-title {
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 2.8em;
+}
+
+.anime-card-info {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.75rem;
+  color: #808080;
+}
+
+.info-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.info-item svg {
+  opacity: 0.7;
+}
+
+.anime-card-type {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 0.7rem;
+  color: #808080;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 2px 8px;
+  border-radius: 12px;
+  backdrop-filter: blur(4px);
+}
+
+/* List View Styles */
+.anime-collection.list .anime-card {
+  flex-direction: row;
+  height: 160px;
+}
+
+.anime-collection.list .anime-card-link {
+  flex-direction: row;
+}
+
+.anime-collection.list .anime-card-image {
+  width: 110px;
+  padding-top: 0;
+  height: 160px;
+  flex-shrink: 0;
+}
+
+.anime-collection.list .anime-card-content {
+  padding: 15px;
+  overflow: hidden;
+}
+
+.anime-collection.list .anime-card-title {
+  font-size: 1rem;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.anime-collection.list .anime-card-description {
+  font-size: 0.8rem;
+  color: #808080;
+  margin: 10px 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Additional Status Colors */
+.status-airing {
+  background: rgba(46, 213, 115, 0.9);
+}
+
+.status-completed {
+  background: rgba(71, 84, 255, 0.9);
+}
+
+.status-upcoming {
+  background: rgba(255, 165, 2, 0.9);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .anime-card-title {
+    font-size: 0.85rem;
+  }
+
+  .anime-card-info {
+    font-size: 0.7rem;
+  }
+
+  .anime-collection.list .anime-card {
+    height: 140px;
+  }
+
+  .anime-collection.list .anime-card-image {
+    width: 95px;
+    height: 140px;
+  }
+}

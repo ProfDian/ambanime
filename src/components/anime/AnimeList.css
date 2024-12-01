@@ -1,0 +1,171 @@
+/* src/components/anime/AnimeList.css */
+.anime-list-container {
+  padding: 20px;
+  background-color: #121212;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.list-header h2 {
+  font-size: 2rem;
+  color: #ffffff;
+  font-weight: 700;
+  position: relative;
+  padding-left: 15px;
+}
+
+.list-header h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 70%;
+  background: linear-gradient(to bottom, #FF6B6B, #FF8E8E);
+  border-radius: 2px;
+}
+
+.list-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.sort-select {
+  padding: 8px 16px;
+  background-color: #2a2a2a;
+  border: 1px solid #3a3a3a;
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sort-select:hover {
+  background-color: #3a3a3a;
+}
+
+.view-controls {
+  display: flex;
+  gap: 8px;
+  background-color: #2a2a2a;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.view-button {
+  padding: 8px 16px;
+  background: none;
+  border: none;
+  color: #808080;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.view-button.active {
+  background-color: #FF6B6B;
+  color: #ffffff;
+}
+
+.view-button:not(.active):hover {
+  color: #ffffff;
+  background-color: #3a3a3a;
+}
+
+/* Grid View */
+.anime-collection.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 25px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* List View */
+.anime-collection.list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.load-more {
+  display: block;
+  margin: 40px auto;
+  padding: 12px 30px;
+  background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
+  border: none;
+  border-radius: 25px;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.load-more:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+.loading-indicator {
+  text-align: center;
+  padding: 40px;
+  color: #ffffff;
+}
+
+.spinner {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  border: 3px solid rgba(255, 107, 107, 0.3);
+  border-radius: 50%;
+  border-top-color: #FF6B6B;
+  animation: spin 1s linear infinite;
+  margin-bottom: 10px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #808080;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  margin: 20px 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .list-header {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .anime-collection.grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+}

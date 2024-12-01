@@ -1,0 +1,355 @@
+/* src/components/auth/Auth.css */
+.auth-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+/* Background styles */
+.auth-container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('https://wallpaperaccess.com/full/5564209.jpg');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  filter: brightness(0.7);
+}
+
+/* Left side content */
+.welcome-text {
+  flex: 1;
+  padding: 60px;
+  color: white;
+  max-width: 600px;
+  animation: slideInLeft 1s ease-out;
+}
+
+.welcome-text h1 {
+  font-size: 4rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  line-height: 1.2;
+  background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.welcome-text p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  color: #f0f0f0;
+}
+
+/* Right side content */
+.auth-card {
+  width: 450px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  margin-right: 80px;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: slideInRight 1s ease-out;
+  backdrop-filter: blur(10px);
+}
+
+.auth-title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #333;
+  text-align: left;
+}
+
+/* Form styles */
+.form-group {
+  margin-bottom: 24px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #444;
+  font-weight: 600;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #FF6B6B;
+  box-shadow: 0 0 0 4px rgba(255, 107, 107, 0.1);
+  outline: none;
+}
+
+/* Button styles */
+.auth-submit {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.auth-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
+}
+
+.guest-button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 16px;
+  background: transparent;
+  border: 2px solid #FF6B6B;
+  border-radius: 12px;
+  color: #FF6B6B;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.guest-button:hover {
+  background: rgba(255, 107, 107, 0.1);
+}
+
+/* Error message */
+.auth-error {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: #f44336;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  border: 1px solid rgba(244, 67, 54, 0.2);
+}
+
+/* Link styles */
+.auth-links {
+  margin-top: 24px;
+  text-align: center;
+}
+
+.auth-link {
+  color: #FF6B6B;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.auth-link:hover {
+  color: #ff5252;
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes slideInLeft {
+  from {
+      opacity: 0;
+      transform: translateX(-100px);
+  }
+  to {
+      opacity: 1;
+      transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+      opacity: 0;
+      transform: translateX(100px);
+  }
+  to {
+      opacity: 1;
+      transform: translateX(0);
+  }
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 1s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to {
+      transform: rotate(360deg);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .auth-container {
+      flex-direction: column;
+      padding: 20px;
+  }
+
+  .welcome-text {
+      text-align: center;
+      padding: 40px 20px;
+      margin: 0 auto;
+  }
+
+  .welcome-text h1 {
+      font-size: 3rem;
+  }
+
+  .auth-card {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      margin-bottom: 40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .welcome-text h1 {
+      font-size: 2.5rem;
+  }
+
+  .welcome-text p {
+      font-size: 1rem;
+  }
+
+  .auth-card {
+      padding: 30px;
+  }
+}
+
+/* Add to your existing Auth.css */
+.welcome-features {
+  margin-top: 40px;
+}
+
+.feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.feature span {
+  color: #FF6B6B;
+  font-size: 20px;
+}
+
+.feature p {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #f0f0f0;
+}
+
+.auth-separator {
+  position: relative;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.auth-separator::before,
+.auth-separator::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 45%;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.auth-separator::before {
+  left: 0;
+}
+
+.auth-separator::after {
+  right: 0;
+}
+
+.auth-separator span {
+  background-color: white;
+  padding: 0 10px;
+  color: #666;
+  font-size: 14px;
+}
+
+.auth-options {
+  margin-top: 20px;
+}
+
+.floating-images {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.floating-image {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.1;
+}
+
+.img1 {
+  top: 10%;
+  right: 5%;
+  width: 150px;
+  height: 150px;
+  background-color: #FF6B6B;
+  animation: float 6s ease-in-out infinite;
+}
+
+.img2 {
+  top: 40%;
+  right: 15%;
+  width: 100px;
+  height: 100px;
+  background-color: #FF8E8E;
+  animation: float 8s ease-in-out infinite;
+}
+
+.img3 {
+  bottom: 15%;
+  right: 10%;
+  width: 120px;
+  height: 120px;
+  background-color: #FFA5A5;
+  animation: float 7s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+      transform: translateY(0);
+  }
+  50% {
+      transform: translateY(-20px);
+  }
+}
