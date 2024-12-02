@@ -1,116 +1,140 @@
-// src/pages/Genre.js
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { api } from '../services/api';
 import AnimeCard from '../components/anime/AnimeCard';
 import './Genres.css';
 
+const POPULAR_GENRES = [
+  { id: 1, name: 'Action', color: '#FF6B6B' },
+  { id: 2, name: 'Romance', color: '#FF9999' },
+  { id: 4, name: 'Comedy', color: '#FFB84C' },
+  { id: 8, name: 'Drama', color: '#7B66FF' },
+  { id: 10, name: 'Fantasy', color: '#5C469C' },
+  { id: 7, name: 'Mystery', color: '#1B9C85' },
+  { id: 24, name: 'Sci-Fi', color: '#4942E4' },
+  { id: 36, name: 'Slice of Life', color: '#C4B0FF' }
+];
+
 const Genre = () => {
   const { isGuest } = useAuth();
-  const [genres, setGenres] = useState([]);
-  const [selectedGenre, setSelectedGenre] = useState(null);
-  const [animeByGenre, setAnimeByGenre] = useState([]);
+  const [selectedGenre, setSelectedGenre] = useState(POPULAR_GENRES[0]);
+  const [animeList, setAnimeList] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const fetchGenres = async () => {
-      try {
-        setLoading(true);
-        const response = await api.getGenres();
-        const filteredGenres = response.data.filter(genre => 
-          !genre.name.includes('Explicit') && !genre.name.includes('Hentai')
-        );
-        setGenres(filteredGenres);
-        
-        if (filteredGenres.length > 0) {
-          setSelectedGenre(filteredGenres[0]);
-          await fetchAnimeForGenre(filteredGenres[0].mal_id);
-        }
-      } catch (err) {
-        setError('Failed to load genres. Please try again later.');
-        console.error('Error fetching genres:', err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const fetchAnimeByGenre = useCallback(async (genreId) => {
+    if (!genreId) return;
 
-    fetchGenres();
-  }, []);
-
-  const fetchAnimeForGenre = async (genreId) => {
     try {
       setLoading(true);
+      setError(null);
+
       const response = await fetch(
-        `${api.BASE_URL}/anime?genres=${genreId}&limit=15&order_by=popularity`
+        `https://api.jikan.moe/v4/anime?genres=${genreId}&limit=18&order_by=score&sort=desc&sfw=true`
       );
+      
+      if (!response.ok) {
+        throw new Error(response.status === 429 
+          ? 'Too many requests. Please wait a moment and try again.'
+          : 'Failed to fetch anime data');
+      }
+      
       const data = await response.json();
-      setAnimeByGenre(data.data);
+      setAnimeList(data.data || []);
     } catch (err) {
-      console.error('Error fetching anime for genre:', err);
+      setError(err.message || 'Failed to load anime. Please try again.');
+      console.error('Error fetching anime:', err);
+      setAnimeList([]);
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const handleGenreClick = async (genre) => {
+  // Fetch anime when genre changes
+  useEffect(() => {
+    let isActive = true;
+
+    const fetchData = async () => {
+      if (selectedGenre?.id && isActive) {
+        await fetchAnimeByGenre(selectedGenre.id);
+      }
+    };
+
+    fetchData();
+
+    // Cleanup function
+    return () => {
+      isActive = false;
+    };
+  }, [selectedGenre, fetchAnimeByGenre]);
+
+  const handleGenreClick = (genre) => {
+    if (selectedGenre?.id === genre.id) return;
     setSelectedGenre(genre);
-    await fetchAnimeForGenre(genre.mal_id);
   };
 
   return (
     <div className="genre-page">
       <div className="genre-banner">
-        <div className="genre-banner-content">
-          <h1>Explore Anime by Genre</h1>
-          <p>Discover new series based on your favorite genres</p>
-        </div>
+        <h1>Discover Anime by Genre</h1>
+        <p>Explore the best anime series in your favorite genre</p>
       </div>
 
-      <div className="genre-content">
-        <div className="genre-sidebar">
-          <h2>Genres</h2>
-          <div className="genre-list">
-            {genres.map(genre => (
-              <button
-                key={genre.mal_id}
-                className={`genre-button ${selectedGenre?.mal_id === genre.mal_id ? 'active' : ''}`}
-                onClick={() => handleGenreClick(genre)}
-              >
-                <span>{genre.name}</span>
-                <span className="genre-count">{genre.count}</span>
-              </button>
-            ))}
-          </div>
+      <div className="genres-container">
+        <div className="genre-buttons">
+          {POPULAR_GENRES.map((genre) => (
+            <button
+              key={genre.id}
+              className={`genre-pill ${selectedGenre?.id === genre.id ? 'active' : ''}`}
+              onClick={() => handleGenreClick(genre)}
+              disabled={loading}
+              style={{
+                '--genre-color': genre.color,
+                '--genre-hover-color': `${genre.color}80`
+              }}
+            >
+              {genre.name}
+            </button>
+          ))}
         </div>
 
-        <div className="genre-main">
-          {selectedGenre && (
-            <div className="genre-section">
-              <div className="genre-header">
-                <h2>{selectedGenre.name}</h2>
-                <p className="genre-description">
-                  {selectedGenre.description || 
-                   `Explore popular ${selectedGenre.name} anime series`}
-                </p>
-              </div>
-
-              {loading ? (
-                <div className="loading">Loading anime...</div>
-              ) : error ? (
-                <div className="error">{error}</div>
-              ) : (
-                <div className="anime-grid">
-                  {animeByGenre.map(anime => (
-                    <AnimeCard
-                      key={anime.mal_id}
-                      anime={anime}
-                      isGuest={isGuest}
-                    />
-                  ))}
-                </div>
-              )}
+        <div className="genre-content">
+          {loading && animeList.length === 0 ? (
+            <div className="loading-container">
+              <div className="loading-spinner"></div>
+              <p>Loading awesome anime...</p>
             </div>
+          ) : error ? (
+            <div className="error-message">
+              <p>{error}</p>
+              <button 
+                onClick={() => selectedGenre && fetchAnimeByGenre(selectedGenre.id)}
+                className="retry-button"
+              >
+                Try Again
+              </button>
+            </div>
+          ) : (
+            <>
+              {selectedGenre && (
+                <h2 className="genre-title">
+                  Top {selectedGenre.name} Anime
+                </h2>
+              )}
+              <div className="anime-grid">
+                {animeList.map((anime) => (
+                  <AnimeCard
+                    key={anime.mal_id}
+                    anime={anime}
+                    isGuest={isGuest}
+                  />
+                ))}
+                {animeList.length === 0 && !loading && !error && (
+                  <div className="no-results">
+                    No anime found for this genre.
+                  </div>
+                )}
+              </div>
+            </>
           )}
         </div>
       </div>
