@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../services/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { api } from '../services/api';
 import AnimeCard from '../components/anime/AnimeCard';
 import './Recommendations.css';
 
@@ -12,82 +13,41 @@ const Recommendations = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fungsi untuk menangani rate limiting dan retry
-  const fetchWithRetry = async (url, retries = 3) => {
-    for (let i = 0; i < retries; i++) {
-      try {
-        const response = await fetch(url);
-        if (response.status === 429) {
-          // Rate limit hit - tunggu sebentar sebelum mencoba lagi
-          await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
-          continue;
-        }
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        return await response.json();
-      } catch (error) {
-        if (i === retries - 1) throw error;
-        await new Promise(resolve => setTimeout(resolve, 1000 * (i + 1)));
-      }
-    }
-  };
-
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchRecommendations = async () => {
       setLoading(true);
       setError(null);
 
       try {
-        // Fetch top anime
-        const topResponse = await fetchWithRetry(
-          'https://api.jikan.moe/v4/top/anime?filter=bypopularity&limit=10'
-        );
-        setTopAnime(topResponse.data || []);
+        const topResponse = await api.getTopAnime('bypopularity', 1);
+        setTopAnime(topResponse.data?.slice(0, 10) || []);
 
-        // Fetch personalized recommendations jika user login
         if (currentUser && !isGuest) {
           const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
           const userData = userDoc.data();
 
           if (userData?.favorites?.length) {
-            // Ambil hanya 2 favorit teratas untuk rekomendasi
             const topFavorites = userData.favorites.slice(0, 2);
             
-            // Fetch recommendations secara sequential untuk menghindari rate limiting
-            let allRecs = [];
-            for (const animeId of topFavorites) {
-              try {
-                const recsResponse = await fetchWithRetry(
-                  `https://api.jikan.moe/v4/anime/${animeId}/recommendations`
-                );
-                
-                if (recsResponse.data) {
-                  allRecs = [...allRecs, ...recsResponse.data];
-                }
-                
-                // Tunggu sebentar sebelum request berikutnya
-                await new Promise(resolve => setTimeout(resolve, 1000));
-              } catch (err) {
-                console.error(`Error fetching recommendations for anime ${animeId}:`, err);
-                continue;
-              }
-            }
-
-            // Proses dan filter rekomendasi
-            const processedRecs = allRecs
-              .filter((rec, index, self) => 
-                index === self.findIndex(r => r.entry.mal_id === rec.entry.mal_id)
-              )
-              .sort((a, b) => b.votes - a.votes) // Sort by votes
-              .slice(0, 10); // Take top 10
-
-            // Fetch minimal details yang dibutuhkan
+            const recommendations = await api.getBatchRecommendations(topFavorites);
+            
             const detailedRecs = await Promise.all(
-              processedRecs.map(rec => 
-                fetchWithRetry(`https://api.jikan.moe/v4/anime/${rec.entry.mal_id}`)
-              )
+              recommendations.map(async (rec) => {
+                try {
+                  const animeDetails = await api.getAnimeById(rec.entry.mal_id);
+                  return animeDetails;
+                } catch (err) {
+                  console.error(`Error fetching details for ${rec.entry.mal_id}:`, err);
+                  return null;
+                }
+              })
             );
 
-            setPersonalizedRecs(detailedRecs.map(response => response.data));
+            setPersonalizedRecs(
+              detailedRecs
+                .filter(Boolean)
+                .map(response => response.data)
+            );
           }
         }
       } catch (err) {
@@ -98,8 +58,12 @@ const Recommendations = () => {
       }
     };
 
-    fetchData();
+    fetchRecommendations();
   }, [currentUser, isGuest]);
+
+  const handleRetry = () => {
+    window.location.reload();
+  };
 
   return (
     <div className="recommendations-page">
@@ -119,7 +83,7 @@ const Recommendations = () => {
         ) : error ? (
           <div className="error-message">
             <p>{error}</p>
-            <button onClick={() => window.location.reload()} className="retry-button">
+            <button onClick={handleRetry} className="retry-button">
               Try Again
             </button>
           </div>

@@ -2,6 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import AnimeCard from '../components/anime/AnimeCard';
 import './Genres.css';
+import { api } from '../services/api';
+
 
 const POPULAR_GENRES = [
   { id: 1, name: 'Action', color: '#FF6B6B' },
@@ -28,17 +30,7 @@ const Genre = () => {
       setLoading(true);
       setError(null);
 
-      const response = await fetch(
-        `https://api.jikan.moe/v4/anime?genres=${genreId}&limit=18&order_by=score&sort=desc&sfw=true`
-      );
-      
-      if (!response.ok) {
-        throw new Error(response.status === 429 
-          ? 'Too many requests. Please wait a moment and try again.'
-          : 'Failed to fetch anime data');
-      }
-      
-      const data = await response.json();
+      const data = await api.getAnimeByGenre(genreId);
       setAnimeList(data.data || []);
     } catch (err) {
       setError(err.message || 'Failed to load anime. Please try again.');
@@ -49,22 +41,10 @@ const Genre = () => {
     }
   }, []);
 
-  // Fetch anime when genre changes
   useEffect(() => {
-    let isActive = true;
-
-    const fetchData = async () => {
-      if (selectedGenre?.id && isActive) {
-        await fetchAnimeByGenre(selectedGenre.id);
-      }
-    };
-
-    fetchData();
-
-    // Cleanup function
-    return () => {
-      isActive = false;
-    };
+    if (selectedGenre?.id) {
+      fetchAnimeByGenre(selectedGenre.id);
+    }
   }, [selectedGenre, fetchAnimeByGenre]);
 
   const handleGenreClick = (genre) => {
