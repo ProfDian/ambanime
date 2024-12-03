@@ -18,7 +18,6 @@ const Home = () => {
         setLoading(true);
         setError(null);
 
-        // Fetch data sequentially to avoid rate limiting
         console.log('Fetching popular anime...');
         const popularData = await api.getTopAnime('bypopularity', 1);
         if (popularData.data) {

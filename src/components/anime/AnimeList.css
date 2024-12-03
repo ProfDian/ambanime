@@ -1,7 +1,7 @@
 /* src/components/anime/AnimeList.css */
 .anime-list-container {
   padding: 20px;
-  background-color: #121212;
+  background-color: #111;
 }
 
 .list-header {
@@ -88,6 +88,7 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 25px;
   animation: fadeIn 0.5s ease-out;
+  margin-bottom: 0;
 }
 
 /* List View */
@@ -96,11 +97,12 @@
   flex-direction: column;
   gap: 20px;
   animation: fadeIn 0.5s ease-out;
+  margin-bottom: 0;
 }
 
 .load-more {
   display: block;
-  margin: 40px auto;
+  margin: 40px auto 0;
   padding: 12px 30px;
   background: linear-gradient(45deg, #FF6B6B, #FF8E8E);
   border: none;
@@ -167,5 +169,19 @@
 
   .anime-collection.grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .list-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .list-controls {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .sort-select {
+    width: 100%;
+    max-width: 200px;
   }
 }
