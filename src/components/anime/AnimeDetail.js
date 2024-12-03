@@ -16,6 +16,17 @@ import {
   getDocs,
   addDoc,
 } from 'firebase/firestore';
+// Import icons
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { 
+  faHeart, 
+  faList, 
+  faClock, 
+  faStar, 
+  faThumbsUp, 
+  faComment, 
+  faPaperPlane 
+} from '@fortawesome/free-solid-svg-icons';
 
 import './AnimeDetail.css';
 
@@ -170,54 +181,59 @@ const AnimeDetail = () => {
         <div
           className="anime-detail-banner"
           style={{
-            backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${anime.images?.jpg?.large_image_url})`,
+            backgroundImage: `url(${anime.images?.jpg?.large_image_url})`,
           }}
-        >
-          <div className="anime-detail-content">
-            <div className="anime-poster">
-              <img 
-                src={anime.images?.jpg?.image_url} 
-                alt={anime.title}
-                onError={(e) => {
-                  e.target.onerror = null;
-                  e.target.src = '/placeholder-image.jpg';
-                }}
-              />
-            </div>
-            <div className="anime-info">
-              <h1>{anime.title}</h1>
-              <h2>{anime.title_japanese}</h2>
-              <div className="anime-stats">
-                <span>Score: ★ {anime.score || 'N/A'}</span>
-                <span>Rank: #{anime.rank || 'N/A'}</span>
-                <span>Episodes: {anime.episodes || 'N/A'}</span>
-                <span>Status: {anime.status}</span>
+        />
+        <div className="anime-detail-content">
+          <div className="anime-poster">
+            <img 
+              src={anime.images?.jpg?.image_url} 
+              alt={anime.title}
+              onError={(e) => {
+                e.target.onerror = null;
+                e.target.src = '/placeholder-image.jpg';
+              }}
+            />
+          </div>
+          <div className="anime-info">
+            <h1>{anime.title}</h1>
+            <h2>{anime.title_japanese}</h2>
+            <div className="anime-stats">
+              <div className="stat-item">
+                <div className="stat-label">Score</div>
+                <div className="stat-value">★ {anime.score || 'N/A'}</div>
               </div>
-              {!isGuest && (
-                <div className="anime-actions">
-                  <button
-                    onClick={handleFavorite}
-                    className={`action-button ${
-                      userInteractions.isFavorite ? 'active' : ''
-                    }`}
-                  >
-                    {userInteractions.isFavorite
-                      ? 'Remove from Favorites'
-                      : 'Add to Favorites'}
-                  </button>
-                  <button
-                    onClick={handleWatchlist}
-                    className={`action-button ${
-                      userInteractions.isInWatchlist ? 'active' : ''
-                    }`}
-                  >
-                    {userInteractions.isInWatchlist
-                      ? 'Remove from Watchlist'
-                      : 'Add to Watchlist'}
-                  </button>
-                </div>
-              )}
+              <div className="stat-item">
+                <div className="stat-label">Rank</div>
+                <div className="stat-value">#{anime.rank || 'N/A'}</div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-label">Episodes</div>
+                <div className="stat-value">{anime.episodes || 'N/A'}</div>
+              </div>
+              <div className="stat-item">
+                <div className="stat-label">Status</div>
+                <div className="stat-value">{anime.status}</div>
+              </div>
             </div>
+            {!isGuest && (
+              <div className="anime-actions">
+                <button
+                  onClick={handleFavorite}
+                  className={`action-button ${userInteractions.isFavorite ? 'active' : ''}`}
+                >
+                  <FontAwesomeIcon icon={faHeart} />
+                  {userInteractions.isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+                </button>
+                <button
+                  onClick={handleWatchlist}
+                  className={`action-button ${userInteractions.isInWatchlist ? 'active' : ''}`}
+                >
+                  <FontAwesomeIcon icon={faList} />
+                  {userInteractions.isInWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -259,7 +275,7 @@ const AnimeDetail = () => {
         </section>
 
         {!isGuest && (
-          <section className="reviews">
+          <section className="review-section">
             <h3>Reviews</h3>
             <form onSubmit={handleReviewSubmit} className="review-form">
               <textarea
@@ -275,6 +291,7 @@ const AnimeDetail = () => {
                 className="submit-review"
                 disabled={!review.trim()}
               >
+                <FontAwesomeIcon icon={faPaperPlane} />
                 Submit Review
               </button>
             </form>
@@ -283,22 +300,42 @@ const AnimeDetail = () => {
                 reviews.map((review) => (
                   <div key={review.id} className="review-card">
                     <div className="review-header">
-<span className="review-author">{review.userEmail}</span>
-<span className="review-date">
-{new Date(review.createdAt).toLocaleDateString()}
-</span>
-</div>
-<p className="review-content">{review.content}</p>
-</div>
-))
-) : (
-<p>No reviews yet. Be the first to review!</p>
-)}
-</div>
-</section>
-)}
-</div>
-</div>
-);
+                      <div className="review-author">
+                        <img 
+                          src={`https://api.dicebear.com/7.x/initials/svg?seed=${review.userEmail}`} 
+                          alt={review.userEmail} 
+                        />
+                        <span>{review.userEmail}</span>
+                      </div>
+                      <div className="review-metadata">
+                        <span>
+                          <FontAwesomeIcon icon={faClock} />
+                          {new Date(review.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="review-content">{review.content}</div>
+                    <div className="review-actions">
+                      <button className="review-action-button">
+                        <FontAwesomeIcon icon={faThumbsUp} />
+                        <span>Helpful</span>
+                      </button>
+                      <button className="review-action-button">
+                        <FontAwesomeIcon icon={faComment} />
+                        <span>Reply</span>
+                      </button>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <p>No reviews yet. Be the first to review!</p>
+              )}
+            </div>
+          </section>
+        )}
+      </div>
+    </div>
+  );
 };
+
 export default AnimeDetail;
