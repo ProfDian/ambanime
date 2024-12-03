@@ -14,6 +14,7 @@ import Profile from './pages/Profile';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import AnimeDetail from './components/anime/AnimeDetail';
+import CharacterGallery from './components/anime/CharacterGallery';
 import Genres from './pages/Genres';
 import Recommendations from './pages/Recommendations';
 import Search from './pages/Search';
@@ -97,6 +98,16 @@ function App() {
                   <div>
                     <Navbar />
                     <AnimeDetail />
+                    <Footer />
+                  </div>
+                </ProtectedRoute>
+              } />
+
+              <Route path="/character/:id" element={
+                <ProtectedRoute>
+                  <div>
+                    <Navbar />
+                    <CharacterGallery />
                     <Footer />
                   </div>
                 </ProtectedRoute>

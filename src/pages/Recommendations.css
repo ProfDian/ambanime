@@ -4,7 +4,7 @@
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
   color: #fff;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 /* Enhanced Banner */
@@ -13,19 +13,6 @@
   padding: 6rem 0 4rem;
   position: relative;
   overflow: hidden;
-}
-
-.recommendations-banner::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(76, 0, 255, 0.15) 0%, transparent 50%),
-    radial-gradient(circle at 80% 50%, rgba(255, 0, 128, 0.15) 0%, transparent 50%);
-  animation: gradientMove 15s ease infinite;
 }
 
 .recommendations-banner-content {
@@ -38,7 +25,7 @@
 }
 
 .recommendations-banner h1 {
-  font-size: 3.5rem;
+  font-size: 4rem;
   font-weight: 800;
   margin-bottom: 1rem;
   background: linear-gradient(45deg, #fff, #e0e0e0);
@@ -49,7 +36,7 @@
 }
 
 .recommendations-banner p {
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   opacity: 0;
   animation: fadeIn 0.8s ease-out 0.3s forwards;
   color: #e0e0e0;
@@ -63,9 +50,14 @@
   position: relative;
 }
 
-/* Section Styling */
+/* Recommendations Grid */
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
 .recommendations-section {
-  margin-bottom: 3rem;
   background: rgba(255, 255, 255, 0.03);
   padding: 2rem;
   border-radius: 20px;
@@ -77,17 +69,19 @@
   opacity: 0;
 }
 
-.recommendations-section:nth-child(2) {
-  animation-delay: 0.2s;
-}
-
 .recommendations-section:hover {
   transform: translateY(-5px);
 }
 
-.recommendations-section h2 {
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
   color: #fff;
   font-weight: 700;
   display: flex;
@@ -95,20 +89,12 @@
   gap: 0.5rem;
 }
 
-.recommendations-section h2::before {
+.section-header h2::before {
   content: '★';
   color: #FF6B6B;
-  font-size: 1.5rem;
+  font-size: 2rem;
 }
 
-.section-description {
-  color: #b0b0b0;
-  margin-bottom: 2rem;
-  font-size: 1rem;
-  opacity: 0.8;
-}
-
-/* Anime Grid */
 .anime-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -117,32 +103,7 @@
   animation: fadeIn 0.8s ease-out 0.5s forwards;
 }
 
-/* Loading State */
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-  gap: 1rem;
-}
-
-.loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(255, 255, 255, 0.1);
-  border-radius: 50%;
-  border-top-color: #FF6B6B;
-  animation: spin 1s linear infinite;
-}
-
 /* Animations */
-@keyframes gradientMove {
-  0% { transform: translateY(0) scale(1); }
-  50% { transform: translateY(-20px) scale(1.1); }
-  100% { transform: translateY(0) scale(1); }
-}
-
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -160,64 +121,5 @@
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .recommendations-banner h1 {
-    font-size: 3rem;
-  }
-
-  .anime-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 1.5rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .recommendations-banner {
-    padding: 4rem 0 3rem;
-  }
-
-  .recommendations-banner h1 {
-    font-size: 2.5rem;
-  }
-
-  .recommendations-section {
-    padding: 1.5rem;
-  }
-
-  .recommendations-section h2 {
-    font-size: 1.8rem;
-  }
-
-  .anime-grid {
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 1rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .recommendations-banner h1 {
-    font-size: 2rem;
-  }
-
-  .recommendations-banner p {
-    font-size: 1rem;
-  }
-
-  .recommendations-section {
-    padding: 1rem;
-  }
-
-  .recommendations-section h2 {
-    font-size: 1.5rem;
   }
 }

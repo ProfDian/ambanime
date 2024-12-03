@@ -1,173 +1,140 @@
-// src/components/anime/CharacterGallery.js
 import React, { useState, useEffect } from 'react';
-import { api } from '../../services/api';
+import { useParams } from 'react-router-dom';
 import './CharacterGallery.css';
 
-const CharacterGallery = ({ animeId }) => {
-  const [characters, setCharacters] = useState([]);
-  const [selectedCharacter, setSelectedCharacter] = useState(null);
+const CharacterGallery = () => {
+  const { id: characterId } = useParams();
+  const [characterData, setCharacterData] = useState(null);
+  const [characterPictures, setCharacterPictures] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [page, setPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   useEffect(() => {
-    fetchCharacters();
-  }, [animeId]);
-
-  const fetchCharacters = async () => {
-    try {
+    const fetchCharacterDetails = async () => {
       setLoading(true);
-      const response = await fetch(
-        `${api.BASE_URL}/anime/${animeId}/characters`
-      );
-      const data = await response.json();
-      
-      if (data.data) {
-        setCharacters(data.data);
-        setHasMore(data.pagination?.has_next_page || false);
+      try {
+        // Fetch character details
+        const characterResponse = await fetch(
+          `https://api.jikan.moe/v4/characters/${characterId}`
+        );
+        if (!characterResponse.ok) throw new Error('Failed to fetch character data');
+        const characterData = await characterResponse.json();
+
+        // Add delay to prevent rate limiting
+        await new Promise(resolve => setTimeout(resolve, 1000));
+
+        // Fetch character pictures
+        const picturesResponse = await fetch(
+          `https://api.jikan.moe/v4/characters/${characterId}/pictures`
+        );
+        if (!picturesResponse.ok) throw new Error('Failed to fetch pictures');
+        const picturesData = await picturesResponse.json();
+
+        setCharacterData(characterData.data);
+        setCharacterPictures(picturesData.data);
+      } catch (err) {
+        setError(err.message);
+        console.error('Error fetching character data:', err);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      setError('Failed to load characters');
-      console.error('Error fetching characters:', err);
-    } finally {
-      setLoading(false);
+    };
+
+    if (characterId) {
+      fetchCharacterDetails();
     }
+  }, [characterId]);
+
+  const openImageModal = (image) => {
+    setSelectedImage(image);
   };
 
-  const fetchCharacterDetails = async (characterId) => {
-    try {
-      setLoading(true);
-      const response = await fetch(
-        `${api.BASE_URL}/characters/${characterId}/full`
-      );
-      const data = await response.json();
-      
-      if (data.data) {
-        setSelectedCharacter(data.data);
-      }
-    } catch (err) {
-      console.error('Error fetching character details:', err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const loadMoreCharacters = async () => {
-    setPage(prev => prev + 1);
-    try {
-      const response = await fetch(
-        `${api.BASE_URL}/anime/${animeId}/characters?page=${page + 1}`
-      );
-      const data = await response.json();
-      
-      if (data.data) {
-        setCharacters(prev => [...prev, ...data.data]);
-        setHasMore(data.pagination?.has_next_page || false);
-      }
-    } catch (err) {
-      console.error('Error loading more characters:', err);
-    }
-  };
-
-  if (loading && characters.length === 0) {
-    return <div className="loading">Loading characters...</div>;
+  if (loading) {
+    return (
+      <div className="character-loading">
+        <div className="loading-spinner"></div>
+        <p>Loading character details...</p>
+      </div>
+    );
   }
 
   if (error) {
-    return <div className="error">{error}</div>;
+    return (
+      <div className="character-error">
+        <p>{error}</p>
+        <button onClick={() => window.location.reload()}>Try Again</button>
+      </div>
+    );
   }
 
+  if (!characterData) return null;
+
   return (
-    <div className="character-gallery">
-      <h2>Characters</h2>
-      
-      <div className="characters-grid">
-        {characters.map(({ character, role, voice_actors }) => (
-          <div 
-            key={character.mal_id} 
-            className="character-card"
-            onClick={() => fetchCharacterDetails(character.mal_id)}
-          >
-            <div className="character-image">
-              <img 
-                src={character.images.jpg.image_url} 
-                alt={character.name}
-                loading="lazy"
-              />
-              <div className="character-role">{role}</div>
-            </div>
-            <div className="character-info">
-              <h3>{character.name}</h3>
-              {voice_actors && voice_actors[0] && (
-                <div className="voice-actor">
-                  <small>VA: {voice_actors[0].person.name}</small>
-                </div>
-              )}
-            </div>
+    <div className="character-gallery-page">
+      {/* Character Header */}
+      <div className="character-header">
+        <div className="character-profile">
+          <img 
+            src={characterData.images.jpg.image_url} 
+            alt={characterData.name}
+            className="character-main-image"
+          />
+          <div className="character-info">
+            <h1>{characterData.name}</h1>
+            {characterData.name_kanji && (
+              <h2 className="character-kanji">{characterData.name_kanji}</h2>
+            )}
+            {characterData.nicknames?.length > 0 && (
+              <p className="character-nicknames">
+                Also known as: {characterData.nicknames.join(', ')}
+              </p>
+            )}
           </div>
-        ))}
+        </div>
+        
+        {characterData.about && (
+          <div className="character-about">
+            <h3>About</h3>
+            <p>{characterData.about}</p>
+          </div>
+        )}
       </div>
 
-      {hasMore && (
-        <button onClick={loadMoreCharacters} className="load-more">
-          Load More Characters
-        </button>
-      )}
+      {/* Pictures Gallery */}
+      <div className="character-pictures">
+        <h3>Gallery</h3>
+        <div className="pictures-grid">
+          {characterPictures.map((picture, index) => (
+            <div 
+              key={index} 
+              className="picture-card"
+              onClick={() => openImageModal(picture)}
+            >
+              <img 
+                src={picture.jpg.image_url} 
+                alt={`${characterData.name} ${index + 1}`}
+                loading="lazy"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
 
-      {selectedCharacter && (
-        <div className="character-modal">
-          <div className="modal-content">
+      {/* Image Modal */}
+      {selectedImage && (
+        <div className="image-modal" onClick={() => setSelectedImage(null)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <img 
+              src={selectedImage.jpg.image_url} 
+              alt={characterData.name} 
+            />
             <button 
               className="close-modal"
-              onClick={() => setSelectedCharacter(null)}
+              onClick={() => setSelectedImage(null)}
             >
               ×
             </button>
-            
-            <div className="character-details">
-              <div className="character-header">
-                <img 
-                  src={selectedCharacter.images.jpg.image_url}
-                  alt={selectedCharacter.name}
-                  className="character-portrait"
-                />
-                <div className="character-meta">
-                  <h2>{selectedCharacter.name}</h2>
-                  <h3>{selectedCharacter.name_kanji}</h3>
-                  {selectedCharacter.nicknames.length > 0 && (
-                    <p>Also known as: {selectedCharacter.nicknames.join(', ')}</p>
-                  )}
-                </div>
-              </div>
-
-              {selectedCharacter.about && (
-                <div className="character-description">
-                  <h4>About</h4>
-                  <p>{selectedCharacter.about}</p>
-                </div>
-              )}
-
-              {selectedCharacter.voice_actors && (
-                <div className="voice-actors">
-                  <h4>Voice Actors</h4>
-                  <div className="voice-actors-grid">
-                    {selectedCharacter.voice_actors.map(va => (
-                      <div key={va.person.mal_id} className="va-card">
-                        <img 
-                          src={va.person.images.jpg.image_url}
-                          alt={va.person.name}
-                        />
-                        <div className="va-info">
-                          <p>{va.person.name}</p>
-                          <small>{va.language}</small>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
           </div>
         </div>
       )}

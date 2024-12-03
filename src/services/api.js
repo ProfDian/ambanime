@@ -2,166 +2,25 @@ const BASE_URL = 'https://api.jikan.moe/v4';
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-const handleRateLimit = async (retries = 3) => {
-  const waitTime = (retries + 1) * 1000;
-  console.log(`Rate limited, waiting ${waitTime}ms before retrying...`);
-  await delay(waitTime);
-};
+class JikanAPI {
+  constructor() {
+    this.baseUrl = BASE_URL;
+  }
 
-export const api = {
-  // Existing methods
-  getAnimeList: async (page = 1, filter = '', retries = 3) => {
-    try {
-      await delay(1000);
-      const response = await fetch(`${BASE_URL}/anime?page=${page}&${filter}`);
-      
-      if (response.status === 429 && retries > 0) {
-        await handleRateLimit(retries);
-        return api.getAnimeList(page, filter, retries - 1);
-      }
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    } catch (error) {
-      console.error('Error fetching anime list:', error);
-      throw error;
-    }
-  },
+  async handleRateLimit(retries) {
+    const waitTime = (retries + 1) * 1000;
+    console.log(`Rate limited, waiting ${waitTime}ms before retrying...`);
+    await delay(waitTime);
+  }
 
-  getTopAnime: async (filter = 'bypopularity', page = 1, retries = 3) => {
-    try {
-      await delay(1000);
-      const response = await fetch(`${BASE_URL}/top/anime?filter=${filter}&page=${page}`);
-      
-      if (response.status === 429 && retries > 0) {
-        await handleRateLimit(retries);
-        return api.getTopAnime(filter, page, retries - 1);
-      }
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    } catch (error) {
-      console.error('Error fetching top anime:', error);
-      throw error;
-    }
-  },
-
-  getAnimeById: async (id, retries = 3) => {
+  async fetchData(endpoint, queryParams = '', retries = 3) {
     try {
       await delay(500);
-      const response = await fetch(`${BASE_URL}/anime/${id}/full`);
-      
-      if (response.status === 429 && retries > 0) {
-        await handleRateLimit(retries);
-        return api.getAnimeById(id, retries - 1);
-      }
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    } catch (error) {
-      console.error('Error fetching anime:', error);
-      throw error;
-    }
-  },
+      const response = await fetch(`${this.baseUrl}/${endpoint}?${queryParams}`);
 
-  getAnimeCharacters: async (id, retries = 3) => {
-    try {
-      await delay(500);
-      const response = await fetch(`${BASE_URL}/anime/${id}/characters`);
-      
       if (response.status === 429 && retries > 0) {
-        await handleRateLimit(retries);
-        return api.getAnimeCharacters(id, retries - 1);
-      }
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    } catch (error) {
-      console.error('Error fetching characters:', error);
-      throw error;
-    }
-  },
-
-  // Enhanced recommendations method with better rate limiting
-  getRecommendations: async (id, retries = 3) => {
-    try {
-      await delay(500);
-      const response = await fetch(`${BASE_URL}/anime/${id}/recommendations`);
-      
-      if (response.status === 429 && retries > 0) {
-        await handleRateLimit(retries);
-        return api.getRecommendations(id, retries - 1);
-      }
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    } catch (error) {
-      console.error('Error fetching recommendations:', error);
-      throw error;
-    }
-  },
-
-  searchAnime: async (query, page = 1, retries = 3) => {
-    try {
-      await delay(500);
-      const response = await fetch(`${BASE_URL}/anime?q=${query}&page=${page}`);
-      
-      if (response.status === 429 && retries > 0) {
-        await handleRateLimit(retries);
-        return api.searchAnime(query, page, retries - 1);
-      }
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    } catch (error) {
-      console.error('Error searching anime:', error);
-      throw error;
-    }
-  },
-
-  getSeasonalAnime: async (year, season, retries = 3) => {
-    try {
-      await delay(500);
-      const response = await fetch(`${BASE_URL}/seasons/${year}/${season}`);
-      
-      if (response.status === 429 && retries > 0) {
-        await handleRateLimit(retries);
-        return api.getSeasonalAnime(year, season, retries - 1);
-      }
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return response.json();
-    } catch (error) {
-      console.error('Error fetching seasonal anime:', error);
-      throw error;
-    }
-  },
-
-  // Enhanced getAnimeByGenre with rate limiting and retries
-  getAnimeByGenre: async (genreId, retries = 3) => {
-    try {
-      await delay(500);
-      const response = await fetch(
-        `${BASE_URL}/anime?genres=${genreId}&limit=18&order_by=score&sort=desc&sfw=true`
-      );
-      
-      if (response.status === 429 && retries > 0) {
-        await handleRateLimit(retries);
-        return api.getAnimeByGenre(genreId, retries - 1);
+        await this.handleRateLimit(retries);
+        return this.fetchData(endpoint, queryParams, retries - 1);
       }
 
       if (!response.ok) {
@@ -169,19 +28,50 @@ export const api = {
       }
       return response.json();
     } catch (error) {
-      console.error('Error fetching anime by genre:', error);
+      console.error(`Error fetching data from ${endpoint}:`, error);
       throw error;
     }
-  },
+  }
 
-  // New method for batch recommendations
-  getBatchRecommendations: async (animeIds, limit = 10, retries = 3) => {
+  async getAnimeList(page = 1, filter = '') {
+    return this.fetchData(`anime`, `page=${page}&${filter}`);
+  }
+
+  async getTopAnime(filter = 'bypopularity', page = 1) {
+    return this.fetchData(`top/anime`, `filter=${filter}&page=${page}`);
+  }
+
+  async getAnimeById(id) {
+    return this.fetchData(`anime/${id}/full`);
+  }
+
+  async getAnimeCharacters(id) {
+    return this.fetchData(`anime/${id}/characters`);
+  }
+
+  async getRecommendations(id) {
+    return this.fetchData(`anime/${id}/recommendations`);
+  }
+
+  async searchAnime(query, page = 1) {
+    return this.fetchData(`anime`, `q=${query}&page=${page}`);
+  }
+
+  async getSeasonalAnime(year, season) {
+    return this.fetchData(`seasons/${year}/${season}`);
+  }
+
+  async getAnimeByGenre(genreId) {
+    return this.fetchData(`anime`, `genres=${genreId}&limit=18&order_by=score&sort=desc&sfw=true`);
+  }
+
+  async getBatchRecommendations(animeIds, limit = 10) {
     try {
       let allRecs = [];
       for (const id of animeIds) {
-        await delay(500);
+        await delay(300);
         try {
-          const response = await api.getRecommendations(id, retries);
+          const response = await this.getRecommendations(id);
           if (response.data) {
             allRecs = [...allRecs, ...response.data];
           }
@@ -201,11 +91,13 @@ export const api = {
       console.error('Error fetching batch recommendations:', error);
       throw error;
     }
-  },
-};
+  }
+}
+
+export const api = new JikanAPI();
 
 export const ANIME_CATEGORIES = {
   POPULAR: 'bypopularity',
   AIRING: 'airing',
   UPCOMING: 'upcoming',
-};
+}

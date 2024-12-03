@@ -88,13 +88,12 @@ const Recommendations = () => {
             </button>
           </div>
         ) : (
-          <>
+          <div className="recommendations-grid">
             {!isGuest && personalizedRecs.length > 0 && (
               <section className="recommendations-section">
-                <h2>Personalized For You</h2>
-                <p className="section-description">
-                  Based on your favorite anime
-                </p>
+                <div className="section-header">
+                  <h2>Personalized For You</h2>
+                </div>
                 <div className="anime-grid">
                   {personalizedRecs.map(anime => (
                     <AnimeCard 
@@ -108,10 +107,9 @@ const Recommendations = () => {
             )}
 
             <section className="recommendations-section">
-              <h2>Popular Right Now</h2>
-              <p className="section-description">
-                Trending series loved by anime fans worldwide
-              </p>
+              <div className="section-header">
+                <h2>Popular Right Now</h2>
+              </div>
               <div className="anime-grid">
                 {topAnime.map(anime => (
                   <AnimeCard 
@@ -122,7 +120,7 @@ const Recommendations = () => {
                 ))}
               </div>
             </section>
-          </>
+          </div>
         )}
       </div>
     </div>

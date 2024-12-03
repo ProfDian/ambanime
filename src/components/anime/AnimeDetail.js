@@ -1,6 +1,6 @@
 // src/pages/AnimeDetail.js
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { api } from '../../services/api';
 import { db } from '../../services/firebase';
@@ -180,7 +180,7 @@ const AnimeDetail = () => {
                 alt={anime.title}
                 onError={(e) => {
                   e.target.onerror = null;
-                  e.target.src = '/placeholder-image.jpg'; // Add a placeholder image
+                  e.target.src = '/placeholder-image.jpg';
                 }}
               />
             </div>
@@ -233,20 +233,24 @@ const AnimeDetail = () => {
           <div className="characters-grid">
             {characters.length > 0 ? (
               characters.map((char) => (
-                <div key={char.character.mal_id} className="character-card">
+                <Link 
+                  key={char.character.mal_id}
+                  to={`/character/${char.character.mal_id}`}
+                  className="character-card"
+                >
                   <img
                     src={char.character.images?.jpg?.image_url}
                     alt={char.character.name}
                     onError={(e) => {
                       e.target.onerror = null;
-                      e.target.src = '/placeholder-image.jpg'; // Add a placeholder image
+                      e.target.src = '/placeholder-image.jpg';
                     }}
                   />
                   <div className="character-info">
                     <h4>{char.character.name}</h4>
                     <p>{char.role}</p>
                   </div>
-                </div>
+                </Link>
               ))
             ) : (
               <p>No character information available.</p>
@@ -279,23 +283,22 @@ const AnimeDetail = () => {
                 reviews.map((review) => (
                   <div key={review.id} className="review-card">
                     <div className="review-header">
-                      <span className="review-author">{review.userEmail}</span>
-                      <span className="review-date">
-                        {new Date(review.createdAt).toLocaleDateString()}
-                      </span>
-                    </div>
-                    <p className="review-content">{review.content}</p>
-                  </div>
-                ))
-              ) : (
-                <p>No reviews yet. Be the first to review!</p>
-              )}
-            </div>
-          </section>
-        )}
-      </div>
-    </div>
-  );
+<span className="review-author">{review.userEmail}</span>
+<span className="review-date">
+{new Date(review.createdAt).toLocaleDateString()}
+</span>
+</div>
+<p className="review-content">{review.content}</p>
+</div>
+))
+) : (
+<p>No reviews yet. Be the first to review!</p>
+)}
+</div>
+</section>
+)}
+</div>
+</div>
+);
 };
-
 export default AnimeDetail;
