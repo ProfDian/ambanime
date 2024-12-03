@@ -16,15 +16,13 @@ import {
   getDocs,
   addDoc,
 } from 'firebase/firestore';
+
 // Import icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faHeart, 
   faList, 
   faClock, 
-  faStar, 
-  faThumbsUp, 
-  faComment, 
   faPaperPlane 
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -53,13 +51,11 @@ const AnimeDetail = () => {
         setLoading(true);
         setError(null);
 
-        // Fetch anime details and characters in parallel
         const [animeData, charactersData] = await Promise.all([
           api.getAnimeById(id),
           api.getAnimeCharacters(id),
         ]);
 
-        // Check if we have valid data before setting state
         if (animeData.data) {
           setAnime(animeData.data);
         } else {
@@ -70,31 +66,24 @@ const AnimeDetail = () => {
           setCharacters(charactersData.data.slice(0, 6));
         }
 
-        // Only fetch user-specific data if user is logged in and not a guest
         if (currentUser && !isGuest) {
-          try {
-            const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
-            const userData = userDoc.data();
+          const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
+          const userData = userDoc.data();
 
-            setUserInteractions({
-              isFavorite: userData?.favorites?.includes(id) || false,
-              isInWatchlist: userData?.watchlist?.includes(id) || false,
-            });
+          setUserInteractions({
+            isFavorite: userData?.favorites?.includes(id) || false,
+            isInWatchlist: userData?.watchlist?.includes(id) || false,
+          });
 
-            // Fetch reviews
-            const reviewsRef = collection(db, 'reviews');
-            const q = query(reviewsRef, where('animeId', '==', id));
-            const reviewsSnapshot = await getDocs(q);
+          const reviewsRef = collection(db, 'reviews');
+          const q = query(reviewsRef, where('animeId', '==', id));
+          const reviewsSnapshot = await getDocs(q);
 
-            const reviewsList = [];
-            reviewsSnapshot.forEach((doc) => {
-              reviewsList.push({ id: doc.id, ...doc.data() });
-            });
-            setReviews(reviewsList);
-          } catch (err) {
-            console.error('Error fetching user data:', err);
-            // Don't set error state here as the main anime data is still valid
-          }
+          const reviewsList = [];
+          reviewsSnapshot.forEach((doc) => {
+            reviewsList.push({ id: doc.id, ...doc.data() });
+          });
+          setReviews(reviewsList);
         }
       } catch (err) {
         setError('Failed to load anime details. Please try again later.');
@@ -109,16 +98,12 @@ const AnimeDetail = () => {
 
   const handleFavorite = async () => {
     if (isGuest) return;
-
     try {
       const userRef = doc(db, 'users', currentUser.uid);
       await updateDoc(userRef, {
-        favorites: userInteractions.isFavorite
-          ? arrayRemove(id)
-          : arrayUnion(id),
+        favorites: userInteractions.isFavorite ? arrayRemove(id) : arrayUnion(id),
       });
-
-      setUserInteractions((prev) => ({
+      setUserInteractions(prev => ({
         ...prev,
         isFavorite: !prev.isFavorite,
       }));
@@ -130,16 +115,12 @@ const AnimeDetail = () => {
 
   const handleWatchlist = async () => {
     if (isGuest) return;
-
     try {
       const userRef = doc(db, 'users', currentUser.uid);
       await updateDoc(userRef, {
-        watchlist: userInteractions.isInWatchlist
-          ? arrayRemove(id)
-          : arrayUnion(id),
+        watchlist: userInteractions.isInWatchlist ? arrayRemove(id) : arrayUnion(id),
       });
-
-      setUserInteractions((prev) => ({
+      setUserInteractions(prev => ({
         ...prev,
         isInWatchlist: !prev.isInWatchlist,
       }));
@@ -163,7 +144,7 @@ const AnimeDetail = () => {
       };
 
       const docRef = await addDoc(collection(db, 'reviews'), reviewData);
-      setReviews((prev) => [...prev, { id: docRef.id, ...reviewData }]);
+      setReviews(prev => [...prev, { id: docRef.id, ...reviewData }]);
       setReview('');
     } catch (err) {
       console.error('Error submitting review:', err);
@@ -223,14 +204,14 @@ const AnimeDetail = () => {
                   className={`action-button ${userInteractions.isFavorite ? 'active' : ''}`}
                 >
                   <FontAwesomeIcon icon={faHeart} />
-                  {userInteractions.isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
+                  {userInteractions.isFavorite ? 'Remove Favorite' : 'Add Favorite'}
                 </button>
                 <button
                   onClick={handleWatchlist}
                   className={`action-button ${userInteractions.isInWatchlist ? 'active' : ''}`}
                 >
                   <FontAwesomeIcon icon={faList} />
-                  {userInteractions.isInWatchlist ? 'Remove from Watchlist' : 'Add to Watchlist'}
+                  {userInteractions.isInWatchlist ? 'Remove Watchlist' : 'Add Watchlist'}
                 </button>
               </div>
             )}
@@ -281,7 +262,7 @@ const AnimeDetail = () => {
               <textarea
                 value={review}
                 onChange={(e) => setReview(e.target.value)}
-                placeholder="Write your review..."
+                placeholder="Share your thoughts about this anime..."
                 rows="4"
                 maxLength="1000"
                 required
@@ -292,7 +273,7 @@ const AnimeDetail = () => {
                 disabled={!review.trim()}
               >
                 <FontAwesomeIcon icon={faPaperPlane} />
-                Submit Review
+                <span>Submit Review</span>
               </button>
             </form>
             <div className="reviews-list">
@@ -308,27 +289,15 @@ const AnimeDetail = () => {
                         <span>{review.userEmail}</span>
                       </div>
                       <div className="review-metadata">
-                        <span>
-                          <FontAwesomeIcon icon={faClock} />
-                          {new Date(review.createdAt).toLocaleDateString()}
-                        </span>
+                        <FontAwesomeIcon icon={faClock} />
+                        <span>{new Date(review.createdAt).toLocaleDateString()}</span>
                       </div>
                     </div>
                     <div className="review-content">{review.content}</div>
-                    <div className="review-actions">
-                      <button className="review-action-button">
-                        <FontAwesomeIcon icon={faThumbsUp} />
-                        <span>Helpful</span>
-                      </button>
-                      <button className="review-action-button">
-                        <FontAwesomeIcon icon={faComment} />
-                        <span>Reply</span>
-                      </button>
-                    </div>
                   </div>
                 ))
               ) : (
-                <p>No reviews yet. Be the first to review!</p>
+                <p className="no-reviews">No reviews yet. Be the first to review!</p>
               )}
             </div>
           </section>
