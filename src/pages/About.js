@@ -17,7 +17,7 @@ import {
 
 // imports for developer images
 import fattahImage from '../components/images/fattah.jpg';
-import mamanImage from '../components/images/maman.jpg';
+import mamanImage from '../components/images/alman.jpg';
 import rizkyImage from '../components/images/rizky.jpg';
 import hafianImage from '../components/images/hafian.jpg';
 import zeinImage from '../components/images/zein.jpg';

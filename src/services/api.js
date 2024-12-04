@@ -95,7 +95,6 @@ class JikanAPI {
 }
 
 export const api = new JikanAPI();
-
 export const ANIME_CATEGORIES = {
   POPULAR: 'bypopularity',
   AIRING: 'airing',

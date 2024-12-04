@@ -1,8 +1,7 @@
-// src/pages/Profile.js
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { db } from '../services/firebase';
-import { doc, getDoc, updateDoc, arrayRemove } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, arrayRemove, collection, query, where, getDocs } from 'firebase/firestore';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import Watchlist from '../components/user/Watchlist';
@@ -18,6 +17,7 @@ const Profile = () => {
   const [error, setError] = useState(null);
   const [activeTab, setActiveTab] = useState('favorites');
   const [editMode, setEditMode] = useState(false);
+  const [reviewCount, setReviewCount] = useState(0);
   const [profileData, setProfileData] = useState({
     displayName: '',
     bio: '',
@@ -26,15 +26,25 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUserData = async () => {
+      if (!currentUser?.uid) return;
+      
       try {
         setLoading(true);
         const userDoc = await getDoc(doc(db, 'users', currentUser.uid));
         const userData = userDoc.data();
-        setUserData(userData);
+        
+        // Fetch reviews count
+        const reviewsRef = collection(db, 'reviews');
+        const reviewsQuery = query(reviewsRef, where('userId', '==', currentUser.uid));
+        const reviewsSnapshot = await getDocs(reviewsQuery);
+        const reviewsCount = reviewsSnapshot.size;
+        
+        setReviewCount(reviewsCount);
+        setUserData({ ...userData, reviewsCount });
         setProfileData({
-          displayName: userData.displayName || '',
-          bio: userData.bio || '',
-          favoriteGenres: Array.isArray(userData.favoriteGenres) ? userData.favoriteGenres : [] // Pastikan ini array
+          displayName: userData?.displayName || '',
+          bio: userData?.bio || '',
+          favoriteGenres: Array.isArray(userData?.favoriteGenres) ? userData.favoriteGenres : []
         });
       } catch (err) {
         setError('Failed to load profile data. Please try again later.');
@@ -45,7 +55,7 @@ const Profile = () => {
     };
   
     fetchUserData();
-  }, [currentUser])
+  }, [currentUser]);
 
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
@@ -63,7 +73,8 @@ const Profile = () => {
     }
   };
 
-  const handleRemoveFromFavorites = async (animeId) => {
+  const handleRemoveFromFavorites = async (animeId, e) => {
+    e.stopPropagation();
     try {
       const userRef = doc(db, 'users', currentUser.uid);
       await updateDoc(userRef, {
@@ -79,7 +90,8 @@ const Profile = () => {
     }
   };
 
-  const handleRemoveFromWatchlist = async (animeId) => {
+  const handleRemoveFromWatchlist = async (animeId, e) => {
+    e.stopPropagation();
     try {
       const userRef = doc(db, 'users', currentUser.uid);
       await updateDoc(userRef, {
@@ -120,7 +132,7 @@ const Profile = () => {
             {/* Avatar Section */}
             <div className="profile-avatar">
               <div className="avatar-circle">
-                <span>{profileData.displayName?.charAt(0) || currentUser.email.charAt(0)}</span>
+                <span>{profileData.displayName?.charAt(0) || currentUser.email?.charAt(0)}</span>
               </div>
             </div>
   
@@ -137,6 +149,7 @@ const Profile = () => {
                         ...prev,
                         displayName: e.target.value
                       }))}
+                      className="form-input"
                     />
                   </div>
                   <div className="form-group">
@@ -147,6 +160,7 @@ const Profile = () => {
                         ...prev,
                         bio: e.target.value
                       }))}
+                      className="form-textarea"
                     />
                   </div>
                   <div className="form-group">
@@ -159,6 +173,7 @@ const Profile = () => {
                         favoriteGenres: e.target.value.split(',').map(genre => genre.trim()).filter(genre => genre !== '')
                       }))}
                       placeholder="Action, Romance, Comedy..."
+                      className="form-input"
                     />
                   </div>
                   <div className="profile-edit-actions">
@@ -210,7 +225,7 @@ const Profile = () => {
               </div>
               <div className="stat-item">
                 <MessageSquare size={20} />
-                <span>{userData?.reviews?.length || 0}</span>
+                <span>{reviewCount}</span>
                 <label>Reviews</label>
               </div>
             </div>
@@ -245,12 +260,18 @@ const Profile = () => {
   
           <div className="tab-content">
             {activeTab === 'favorites' && (
-              <Favorites onRemove={handleRemoveFromFavorites} />
+              <Favorites 
+                favorites={userData?.favorites || []}
+                onRemove={handleRemoveFromFavorites} 
+              />
             )}
             {activeTab === 'watchlist' && (
-              <Watchlist onRemove={handleRemoveFromWatchlist} />
+              <Watchlist 
+                watchlist={userData?.watchlist || []}
+                onRemove={handleRemoveFromWatchlist} 
+              />
             )}
-            {activeTab === 'reviews' && <Reviews />}
+            {activeTab === 'reviews' && <Reviews userId={currentUser.uid} />}
           </div>
         </div>
       </div>
