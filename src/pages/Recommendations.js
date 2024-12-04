@@ -4,6 +4,8 @@ import { db } from '../services/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 import { api } from '../services/api';
 import AnimeCard from '../components/anime/AnimeCard';
+import Navbar from '../components/layout/Navbar'; // Import Navbar
+import Footer from '../components/layout/Footer'; // Import Footer
 import './Recommendations.css';
 
 const Recommendations = () => {
@@ -67,6 +69,9 @@ const Recommendations = () => {
 
   return (
     <div className="recommendations-page">
+      {/* Navbar */}
+      <Navbar />
+
       <div className="recommendations-banner">
         <div className="recommendations-banner-content">
           <h1>Anime Recommendations</h1>
@@ -123,6 +128,9 @@ const Recommendations = () => {
           </div>
         )}
       </div>
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

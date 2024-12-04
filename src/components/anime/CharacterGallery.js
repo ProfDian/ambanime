@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './CharacterGallery.css';
 import { useParams } from 'react-router-dom';
+import Navbar from '../layout/Navbar';
+import Footer from '../layout/Footer';
+
 
 const CharacterGallery = () => {
   const { id: characterId } = useParams();
@@ -70,6 +73,9 @@ const CharacterGallery = () => {
 
   return (
     <div className="character-gallery-page">
+      {/* Navbar */}
+      <Navbar />
+
       <div className="gallery-container">
         {/* Left Side - Gallery */}
         <div className="gallery-section">
@@ -128,6 +134,8 @@ const CharacterGallery = () => {
           )}
         </div>
       </div>
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

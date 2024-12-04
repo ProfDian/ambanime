@@ -52,14 +52,14 @@ const Footer = () => {
             </li>
             <li>
               <i className="fas fa-map-marker-alt"></i>
-              <span>Tokyo, Japan</span>
+              <span>Semarang, Indonesia</span>
             </li>
           </ul>
         </div>
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} AniList. All rights reserved.</p>
+        <p>&copy; {new Date().getFullYear()} AmbaNime. All rights reserved.</p>
       </div>
     </footer>
   );

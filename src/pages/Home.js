@@ -2,8 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { api } from '../services/api';
 import AnimeList from '../components/anime/AnimeList';
-import Banner from '../components/layout/Banner';
 import './Home.css';
+import Navbar from '../components/layout/Navbar'; // Navbar import
+import Banner from '../components/layout/Banner';
+import Footer from '../components/layout/Footer';
 
 const Home = () => {
   const [popularAnime, setPopularAnime] = useState([]);
@@ -71,6 +73,9 @@ const Home = () => {
 
   return (
     <div className="home">
+      {/* Navbar */}
+      <Navbar />
+
       {popularAnime.length > 0 && (
         <Banner animeList={popularAnime.slice(0, 5)} />
       )}
@@ -97,6 +102,9 @@ const Home = () => {
           category="upcoming"
         />
       </div>
+      
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import AnimeCard from '../components/anime/AnimeCard';
+import Navbar from '../components/layout/Navbar'; // Import Navbar
+import Footer from '../components/layout/Footer'; // Import Footer
 import './Genres.css';
 import { api } from '../services/api';
-
 
 const POPULAR_GENRES = [
   { id: 1, name: 'Action', color: '#FF6B6B' },
@@ -54,6 +55,9 @@ const Genre = () => {
 
   return (
     <div className="genre-page">
+      {/* Navbar */}
+      <Navbar />
+
       <div className="genre-banner">
         <h1>Discover Anime by Genre</h1>
         <p>Explore the best anime series in your favorite genre</p>
@@ -118,6 +122,8 @@ const Genre = () => {
           )}
         </div>
       </div>
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

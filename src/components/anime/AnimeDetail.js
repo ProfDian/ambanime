@@ -17,6 +17,8 @@ import {
   addDoc,
 } from 'firebase/firestore';
 
+import Navbar from '../layout/Navbar';
+import Footer from '../layout/Footer';
 // Import icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
@@ -158,6 +160,8 @@ const AnimeDetail = () => {
 
   return (
     <div className="anime-detail">
+      {/* Navbar */}
+      <Navbar /> 
       <div className="anime-detail-header">
         <div
           className="anime-detail-banner"
@@ -303,6 +307,8 @@ const AnimeDetail = () => {
           </section>
         )}
       </div>
+      {/* Footer */}
+      <Footer />
     </div>
   );
 };

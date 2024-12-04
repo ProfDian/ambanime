@@ -19,9 +19,14 @@ import Genres from './pages/Genres';
 import Recommendations from './pages/Recommendations';
 import Search from './pages/Search';
 import Settings from './pages/Settings';
-import AdminDashboard from './components/admin/Dashboard';
+import Dashboard from './components/admin/Dashboard';
 
 import './App.css';
+
+const GuestRoute = ({ children }) => {
+  const { currentUser } = useAuth();
+  return !currentUser ? children : <Navigate to="/home" />;
+};
 
 // Protected Route Components
 const ProtectedRoute = ({ children }) => {
@@ -29,15 +34,7 @@ const ProtectedRoute = ({ children }) => {
   return currentUser || isGuest ? children : <Navigate to="/login" />;
 };
 
-const AdminRoute = ({ children }) => {
-  const { currentUser, isAdmin } = useAuth();
-  return currentUser && isAdmin ? children : <Navigate to="/" />;
-};
 
-const GuestRoute = ({ children }) => {
-  const { currentUser } = useAuth();
-  return !currentUser ? children : <Navigate to="/home" />;
-};
 
 function App() {
   return (
@@ -66,9 +63,7 @@ function App() {
               <Route path="/home" element={
                 <ProtectedRoute>
                   <div>
-                    <Navbar />
                     <Home />
-                    <Footer />
                   </div>
                 </ProtectedRoute>
               } />
@@ -76,9 +71,7 @@ function App() {
               <Route path="/about" element={
                 <ProtectedRoute>
                   <div>
-                    <Navbar />
                     <About />
-                    <Footer />
                   </div>
                 </ProtectedRoute>
               } />
@@ -96,9 +89,7 @@ function App() {
               <Route path="/anime/:id" element={
                 <ProtectedRoute>
                   <div>
-                    <Navbar />
                     <AnimeDetail />
-                    <Footer />
                   </div>
                 </ProtectedRoute>
               } />
@@ -106,9 +97,7 @@ function App() {
               <Route path="/character/:id" element={
                 <ProtectedRoute>
                   <div>
-                    <Navbar />
                     <CharacterGallery />
-                    <Footer />
                   </div>
                 </ProtectedRoute>
               } />
@@ -116,9 +105,7 @@ function App() {
               <Route path="/genres" element={
                 <ProtectedRoute>
                   <div>
-                    <Navbar />
                     <Genres />
-                    <Footer />
                   </div>
                 </ProtectedRoute>
               } />
@@ -126,9 +113,7 @@ function App() {
               <Route path="/recommendations" element={
                 <ProtectedRoute>
                   <div>
-                    <Navbar />
                     <Recommendations />
-                    <Footer />
                   </div>
                 </ProtectedRoute>
               } />
@@ -154,14 +139,12 @@ function App() {
               } />
 
               {/* Admin Routes */}
-              <Route path="/admin/*" element={
-                <AdminRoute>
+              <Route path="/admin" element={
+                <ProtectedRoute>
                   <div>
-                    <Navbar />
-                    <AdminDashboard />
-                    <Footer />
+                    <Dashboard/>
                   </div>
-                </AdminRoute>
+                </ProtectedRoute>
               } />
 
               {/* 404 Route */}

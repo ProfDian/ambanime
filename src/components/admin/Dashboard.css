@@ -1,276 +1,454 @@
-/* src/components/admin/Dashboard.css */
+  /* src/components/admin/Dashboard.css */
 
-/* Main Container */
-.admin-dashboard {
-  min-height: 100vh;
-  padding: 2rem;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
-  color: #fff;
-}
+  /* Main Container */
+  .admin-dashboard {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 50%, #2a2a2a 100%);
+    color: #fff;
+    position: relative;
+    overflow-x: hidden;
+  }
 
-/* Dashboard Header & Stats Cards */
-.dashboard-header {
-  margin-bottom: 2rem;
-}
+  /* Dashboard Header & Stats Cards */
+  .dashboard-header {
+    margin-top: 6rem;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
 
-.dashboard-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 2rem;
-  background: linear-gradient(45deg, #fff, #4a90e2);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-}
+  .dashboard-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    background: linear-gradient(45deg, #fff, #4a90e2);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  }
 
-.statistics-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-}
+  .statistics-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
 
-.stat-card {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-  border-radius: 1rem;
-  padding: 1.5rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+  .stat-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    border-radius: 1rem;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
 
-.stat-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
+  .stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  }
 
-.stat-icon {
-  font-size: 2rem;
-  padding: 1rem;
-  border-radius: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-}
+  .stat-icon {
+    font-size: 2rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: rgba(255, 255, 255, 0.1);
+  }
 
-.stat-info {
-  flex: 1;
-}
+  .stat-info {
+    flex: 1;
+  }
 
-.stat-info h3 {
-  font-size: 1rem;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: 0.5rem;
-}
+  .stat-info h3 {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 0.5rem;
+  }
 
-.stat-info p {
-  font-size: 1.8rem;
-  font-weight: bold;
-  background: linear-gradient(45deg, #4a90e2, #63b3ed);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
+  .stat-info p {
+    font-size: 1.8rem;
+    font-weight: bold;
+    background: linear-gradient(45deg, #4a90e2, #63b3ed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 
-/* Analytics Section */
-.analytics-section {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-  gap: 2rem;
-  margin-bottom: 3rem;
-}
+  /* Analytics Section */
+  .analytics-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
 
-.chart-container {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-  border-radius: 1rem;
-  padding: 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
+  .chart-container {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    border-radius: 1rem;
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
 
-.chart-container h2 {
-  font-size: 1.3rem;
-  margin-bottom: 1.5rem;
-  color: rgba(255, 255, 255, 0.9);
-}
+  .chart-container h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
 
-/* Users Section */
-.users-section {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-  border-radius: 1rem;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-}
+  /* Users Section */
+  .users-section {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    border-radius: 1rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+  }
 
-.users-controls {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
+  .users-controls {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
 
-.search-input {
-  flex: 1;
-  padding: 0.8rem 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 0.5rem;
-  color: white;
-}
+  .search-input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    color: white;
+  }
 
-.role-filter {
-  padding: 0.8rem 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 0.5rem;
-  color: white;
-  min-width: 150px;
-}
+  .role-filter {
+    padding: 0.8rem 1rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.5rem;
+    color: white;
+    min-width: 150px;
+  }
 
-.users-list {
-  margin-top: 1rem;
-}
+  .users-list {
+    margin-top: 1rem;
+  }
 
-.users-list h2 {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #fff;
-}
+  .users-list h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    color: #fff;
+  }
 
-/* Users Table */
-.users-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 0.5rem;
-}
+  /* Users Table */
+  .users-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 0.5rem;
+  }
 
-.users-table th {
-  text-align: left;
-  padding: 1rem;
-  color: rgba(255, 255, 255, 0.7);
-  font-weight: 600;
-}
+  .users-table th {
+    text-align: left;
+    padding: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 600;
+  }
 
-.users-table td {
-  padding: 1rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: none;
-}
+  .users-table td {
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: none;
+  }
 
-.users-table tr:hover td {
-  background: rgba(255, 255, 255, 0.08);
-}
+  .users-table tr:hover td {
+    background: rgba(255, 255, 255, 0.08);
+  }
 
-.role-select {
-  padding: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 0.4rem;
-  color: white;
-  cursor: pointer;
-  width: 100%;
-}
+  .role-select {
+    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.4rem;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+  }
 
-/* User Details Panel */
-.user-details-panel {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
-  border-radius: 1rem;
-  padding: 2rem;
-  margin-top: 2rem;
-  animation: slideUp 0.3s ease-out;
-}
+  /* User Details Panel */
+  .user-details-panel {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.03));
+    border-radius: 1rem;
+    padding: 2rem;
+    margin-top: 2rem;
+    animation: slideUp 0.3s ease-out;
+  }
 
-.user-details-panel h2 {
-  font-size: 1.5rem;
-  color: #fff;
-  margin-bottom: 1.5rem;
-}
+  .user-details-panel h2 {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
 
-.user-details-content {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
+  .user-details-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
 
-.details-section {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 1rem;
-  padding: 1.5rem;
-}
+  .details-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
 
-.details-section h3 {
-  font-size: 1.2rem;
-  color: #4a90e2;
-  margin-bottom: 1rem;
-}
+  .details-section h3 {
+    font-size: 1.2rem;
+    color: #4a90e2;
+    margin-bottom: 1rem;
+  }
 
-/* Anime Grid */
-.anime-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 1rem;
-}
+  /* Anime Grid */
+  .anime-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+  }
 
+  .anime-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .anime-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .anime-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+
+  .anime-info {
+    padding: 0.8rem;
+  }
+
+  .anime-info h4 {
+    font-size: 0.9rem;
+    color: white;
+    margin: 0 0 0.5rem 0;
+  }
+
+  /* Reviews List */
+  .reviews-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .review-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 0.8rem;
+    padding: 1rem;
+  }
+
+  .review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .review-header h4 {
+    color: #4a90e2;
+    margin: 0;
+  }
+
+  .review-header span {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  /* Buttons */
+  .view-details-button,
+  .delete-button,
+  .close-button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .view-details-button {
+    background: #4a90e2;
+    color: white;
+  }
+
+  .delete-button {
+    background: #ff4d4d;
+    color: white;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+
+  .close-button {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    margin-top: 1.5rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .view-details-button:hover,
+  .delete-button:hover,
+  .close-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Animations */
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .analytics-section {
+      grid-template-columns: 1fr;
+    }
+    
+    .statistics-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .admin-dashboard {
+      padding: 1rem;
+    }
+
+    .statistics-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .dashboard-header h1 {
+      font-size: 2rem;
+    }
+
+    .users-controls {
+      flex-direction: column;
+    }
+
+    .users-table {
+      display: block;
+      overflow-x: auto;
+    }
+
+    .user-details-content {
+      grid-template-columns: 1fr;
+    }
+
+    .anime-grid {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stat-card {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .review-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+  }
+  /* Update existing anime-card styles */
 .anime-card {
+  position: relative;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 0.5rem;
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
-.anime-card:hover {
-  transform: translateY(-5px);
-}
-
-.anime-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-}
-
+/* Update anime-info styles */
 .anime-info {
   padding: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
 }
 
 .anime-info h4 {
   font-size: 0.9rem;
   color: white;
   margin: 0 0 0.5rem 0;
+  flex: 1;
 }
 
-/* Reviews List */
-.reviews-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+/* Add new styles for the button container */
+.button-container {
+  position: relative;
+  z-index: 10;
+  margin-top: auto;
+  width: 100%;
 }
 
-.review-card {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 0.8rem;
-  padding: 1rem;
-}
-
-.review-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.8rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.review-header h4 {
-  color: #4a90e2;
-  margin: 0;
-}
-
-.review-header span {
+/* Update delete-button styles */
+.delete-button {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.6);
+  position: relative;
+  z-index: 2;
+  opacity: 1;
 }
 
-/* Buttons */
-.view-details-button,
-.delete-button,
-.close-button {
+.delete-button:hover {
+  background: #ff3333;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.delete-button:disabled {
+  background: #666;
+  cursor: not-allowed;
+  transform: none;
+  opacity: 0.7;
+}
+
+/* Add new styles for action buttons in the table */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.delete-account-button {
+  background: #dc3545;
+  color: white;
   padding: 0.5rem 1rem;
   border-radius: 0.5rem;
   border: none;
@@ -278,96 +456,102 @@
   transition: all 0.3s ease;
 }
 
-.view-details-button {
-  background: #4a90e2;
-  color: white;
-}
-
-.delete-button {
-  background: #ff4d4d;
-  color: white;
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
-  width: 100%;
-}
-
-.close-button {
-  background: rgba(255, 255, 255, 0.1);
-  color: white;
-  margin-top: 1.5rem;
-  padding: 0.8rem 1.5rem;
-}
-
-.view-details-button:hover,
-.delete-button:hover,
-.close-button:hover {
+.delete-account-button:hover {
+  background: #c82333;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
-/* Animations */
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Edit form styles */
+.edit-user-form {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-  .analytics-section {
-    grid-template-columns: 1fr;
-  }
-  
-  .statistics-cards {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.form-group {
+  margin-bottom: 1.5rem;
 }
 
-@media (max-width: 768px) {
-  .admin-dashboard {
-    padding: 1rem;
-  }
-
-  .statistics-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .dashboard-header h1 {
-    font-size: 2rem;
-  }
-
-  .users-controls {
-    flex-direction: column;
-  }
-
-  .users-table {
-    display: block;
-    overflow-x: auto;
-  }
-
-  .user-details-content {
-    grid-template-columns: 1fr;
-  }
-
-  .anime-grid {
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  }
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: #fff;
 }
 
-@media (max-width: 480px) {
-  .stat-card {
-    flex-direction: column;
-    text-align: center;
-  }
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.5rem;
+  color: white;
+}
 
-  .review-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
-  }
+.form-group textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.edit-button {
+  background: #28a745;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-button:hover {
+  background: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.update-button {
+  background: #4a90e2;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.update-button:hover {
+  background: #357abd;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cancel-button {
+  background: #6c757d;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancel-button:hover {
+  background: #5a6268;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.edit-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.user-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
 }
