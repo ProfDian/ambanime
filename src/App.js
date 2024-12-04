@@ -121,9 +121,7 @@ function App() {
               <Route path="/search" element={
                 <ProtectedRoute>
                   <div>
-                    <Navbar />
                     <Search />
-                    <Footer />
                   </div>
                 </ProtectedRoute>
               } />

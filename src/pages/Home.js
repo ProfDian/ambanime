@@ -4,9 +4,8 @@ import { api } from '../services/api';
 import AnimeList from '../components/anime/AnimeList';
 import './Home.css';
 import Navbar from '../components/layout/Navbar'; // Navbar import
-import Banner from '../components/layout/Banner';
 import Footer from '../components/layout/Footer';
-
+import Banner from '../components/layout/Banner';
 const Home = () => {
   const [popularAnime, setPopularAnime] = useState([]);
   const [airingAnime, setAiringAnime] = useState([]);
