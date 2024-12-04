@@ -50,7 +50,7 @@ const About = () => {
       alias: "The Doctor Tirta",
       nim: "TBA",
       image: hafianImage,
-      role: "Full Stack Designer"
+      role: "Full Stack Developer"
     },
     {
       name: "Zein",
