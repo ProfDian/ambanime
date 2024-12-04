@@ -15,7 +15,7 @@ import {
   FaNodeJs
 } from 'react-icons/fa';
 
-// Correct imports for developer images
+// imports for developer images
 import fattahImage from '../components/images/fattah.jpg';
 import mamanImage from '../components/images/maman.jpg';
 import rizkyImage from '../components/images/rizky.jpg';
@@ -27,7 +27,7 @@ const About = () => {
     {
       name: "Fattah",
       alias: "The Oppenheimer",
-      nim: "TBA",
+      nim: "21120122120028",
       image: fattahImage,
       role: "Lead Developer"
     },
@@ -55,7 +55,7 @@ const About = () => {
     {
       name: "Zein",
       alias: "The Zainchovics",
-      nim: "TBA",
+      nim: "21120122140151",
       image: zeinImage,
       role: "Full Stack Developer"
     }
@@ -86,16 +86,15 @@ const About = () => {
   ];
 
   return (
-    <>
-      <Navbar />
       <div className="about-container">
+        <Navbar />
         <motion.div 
           className="hero-section"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1 }}
         >
-          <h1>Welcome to AmbaNime</h1>
+          <h1>Welcome to Amba Nime</h1>
           <p>Your Ultimate Anime Discovery Platform</p>
         </motion.div>
 
@@ -189,10 +188,11 @@ const About = () => {
               </motion.div>
             ))}
           </div>
+
         </motion.section>
-      </div>
-      <Footer />
-    </>
+        {/* Footer */}
+        <Footer />
+    </div>
   );
 };
 
