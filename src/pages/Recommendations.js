@@ -71,14 +71,12 @@ const Recommendations = () => {
     <div className="recommendations-page">
       {/* Navbar */}
       <Navbar />
-
       <div className="recommendations-banner">
         <div className="recommendations-banner-content">
           <h1>Anime Recommendations</h1>
           <p>Discover your next favorite anime series</p>
         </div>
       </div>
-
       <div className="recommendations-content">
         {loading ? (
           <div className="loading-container">
@@ -128,7 +126,6 @@ const Recommendations = () => {
           </div>
         )}
       </div>
-      
       {/* Footer */}
       <Footer />
     </div>
