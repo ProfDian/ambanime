@@ -32,9 +32,9 @@ const About = () => {
       role: "Lead Developer"
     },
     {
-      name: "Maman",
+      name: "Alman",
       alias: "The MamanSkuy",
-      nim: "TBA",
+      nim: "21120122120024",
       image: mamanImage,
       role: "Backend Developer"
     },
@@ -50,14 +50,14 @@ const About = () => {
       alias: "The Doctor Tirta",
       nim: "TBA",
       image: hafianImage,
-      role: "UI/UX Designer"
+      role: "Full Stack Developer"
     },
     {
       name: "Zein",
       alias: "The Zainchovics",
       nim: "21120122140151",
       image: zeinImage,
-      role: "Full Stack Developer"
+      role: "UI/UX Developer"
     }
   ];
 
