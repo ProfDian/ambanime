@@ -18,9 +18,7 @@ import CharacterGallery from './components/anime/CharacterGallery';
 import Genres from './pages/Genres';
 import Recommendations from './pages/Recommendations';
 import Search from './pages/Search';
-import Settings from './pages/Settings';
 import Dashboard from './components/admin/Dashboard';
-
 import './App.css';
 
 const GuestRoute = ({ children }) => {
@@ -79,9 +77,7 @@ function App() {
               <Route path="/profile" element={
                 <ProtectedRoute>
                   <div>
-                    <Navbar />
                     <Profile />
-                    <Footer />
                   </div>
                 </ProtectedRoute>
               } />
@@ -126,16 +122,6 @@ function App() {
                 </ProtectedRoute>
               } />
 
-              <Route path="/settings" element={
-                <ProtectedRoute>
-                  <div>
-                    <Navbar />
-                    <Settings />
-                    <Footer />
-                  </div>
-                </ProtectedRoute>
-              } />
-
               {/* Admin Routes */}
               <Route path="/admin" element={
                 <ProtectedRoute>
@@ -151,7 +137,7 @@ function App() {
                   <Navbar />
                   <div className="not-found">
                     <h1>404: Page Not Found</h1>
-                    <p>The page you're looking for doesn't exist.</p>
+                    <p>The page you're looking for doesn't exist just yet.</p>
                   </div>
                   <Footer />
                 </div>

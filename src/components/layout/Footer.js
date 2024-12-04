@@ -26,10 +26,10 @@ const Footer = () => {
         <div className="footer-section">
           <h4>Quick Links</h4>
           <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/browse">Browse</Link></li>
+            <li><Link to="/">Home </Link></li>
+            <li><Link to="/Profile">Profile</Link></li>
             <li><Link to="/genres">Genres</Link></li>
-            <li><Link to="/seasonal">Seasonal</Link></li>
+            <li><Link to="/Recommendations">Recommendations</Link></li>
           </ul>
         </div>
 
@@ -45,7 +45,7 @@ const Footer = () => {
           <ul className="contact-info">
             <li>
               <i className="fas fa-envelope"></i>
-              <a href="mailto:support@anilist.com">support@anilist.com</a>
+              <a href="mailto:fattah@gmail.com">fattah@gmail.com</a>
             </li>
             <li>
               <i className="fas fa-map-marker-alt"></i>

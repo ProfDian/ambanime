@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { api } from '../services/api';
-import { AnimeCardSkeleton, AnimeGridSkeleton } from '../components/common/Skeleton';
+import {AnimeGridSkeleton } from '../components/common/Skeleton';
 import AnimeCard from '../components/anime/AnimeCard';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -54,8 +54,8 @@ const Search = () => {
 
   return (
     <div className="page-wrapper">
-      <Navbar />
       <main className="search-page">
+      <Navbar/>
         <div className="search-header">
           <div className="search-header-content">
             <FaSearch className="search-icon" />
@@ -129,8 +129,8 @@ const Search = () => {
             </>
           )}
         </div>
+        <Footer />
       </main>
-      <Footer />
     </div>
   );
 };

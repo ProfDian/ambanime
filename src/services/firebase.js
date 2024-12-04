@@ -194,19 +194,6 @@ export const getAllUsers = async () => {
   }
 };
 
-export const updateUserRole = async (userId, newRole) => {
-  try {
-    const userRef = doc(db, 'users', userId);
-    await updateDoc(userRef, {
-      role: newRole,
-      updatedAt: new Date().toISOString()
-    });
-  } catch (error) {
-    console.error("Update user role error:", error);
-    throw error;
-  }
-};
-
 export const deleteUser = async (userId) => {
   try {
     // Delete user reviews

@@ -1,6 +1,6 @@
 /* src/pages/Search.css */
 .page-wrapper {
-  min-height: 100vh;
+  min-height: 200vh;
   display: flex;
   flex-direction: column;
 }
@@ -13,10 +13,10 @@
 
 .search-header {
   background: linear-gradient(135deg, #1a1d23 0%, #2d2f36 100%);
-  padding: 3rem 2rem;
+  padding: 6.9rem 2rem;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 0px 20px rgba(0, 0, 0, 0.3);
   
 }
 
@@ -32,7 +32,7 @@
 }
 
 .search-header-content {
-  max-width: 900px;
+  max-width: 600px;
   margin: 0 auto;
   text-align: center;
   position: relative;
