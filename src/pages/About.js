@@ -21,6 +21,7 @@ import mamanImage from '../components/images/maman.jpg';
 import rizkyImage from '../components/images/rizky.jpg';
 import hafianImage from '../components/images/hafian.jpg';
 import zeinImage from '../components/images/zein.jpg';
+
 const About = () => {
   const developers = [
     {

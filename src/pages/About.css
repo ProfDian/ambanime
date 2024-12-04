@@ -16,8 +16,7 @@
     align-items: center;
     text-align: center;
     position: relative;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                url('../components/images/bannerabout.jpg');
+    background: url('../components/images/bannerabout.jpg');
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
